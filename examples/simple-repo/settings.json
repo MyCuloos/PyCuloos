@@ -1,0 +1,73 @@
+{
+  "python": {
+    "path": "python",
+    "defaultParams": {
+      "mode": "text",
+      "options": ["-u"]
+    }
+  },
+  "scriptGroups": [
+    {
+      "name": "Simple Scripts",
+      "options": {
+        "basePath": "examples/simple-repo/scripts"
+      },
+      "scripts": [
+        {
+          "name": "My Culo",
+          "path": "my_culo.py",
+          "args": [
+            {
+              "type": "number",
+              "default": 10
+            },
+            {
+              "type": "string",
+              "default": "AAAABBBB",
+              "editable": false
+            },
+            {
+              "type": "string",
+              "options": [
+                {
+                  "value": "A",
+                  "label": "A means A"
+                },
+                {
+                  "value": "B",
+                  "label": "B means B"
+                }
+              ]
+            },
+            {
+              "type": "filepath"
+            }
+          ]
+        },
+        {
+          "name": "My Culo2",
+          "path": "my_culo2.py",
+          "args": [
+            {
+              "name": "Output Directory",
+              "type": "filepath"
+            },
+            {
+              "name": "Input Files",
+              "type": "filepath",
+              "multivalue": true
+            },
+            {
+              "name": "quality",
+              "type": "number",
+              "validators": [
+                { "type": "minValue", "params": 0 },
+                { "type": "maxValue", "params": 100 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

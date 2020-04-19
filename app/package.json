@@ -1,0 +1,16 @@
+{
+  "name": "pyculoos",
+  "productName": "PyCuloos",
+  "version": "0.0.1-alpha.0",
+  "description": "PyCuloos",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "PyCuloos"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
