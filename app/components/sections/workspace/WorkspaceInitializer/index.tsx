@@ -1,8 +1,8 @@
-import React from 'react';
-import { WorkspaceProvider } from '../../../../context/workspace/workspaceContext';
+import React from "react"
+import { WorkspaceProvider } from "../../../../context/workspace/workspaceContext"
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export default function WorkspaceInitializer({ children }: Props) {
@@ -13,5 +13,5 @@ export default function WorkspaceInitializer({ children }: Props) {
     >
       {children}
     </WorkspaceProvider>
-  );
+  )
 }

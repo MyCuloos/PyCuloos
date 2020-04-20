@@ -1,7 +1,7 @@
-import React from 'react';
-import { Row, Col } from 'antd';
-import styles from './Home.css';
-import PyScripts from './Script';
+import React from "react"
+import { Row, Col } from "antd"
+import styles from "./Home.css"
+import PyScripts from "./Script"
 
 export default function Home() {
   return (
@@ -13,5 +13,5 @@ export default function Home() {
         </Col>
       </Row>
     </div>
-  );
+  )
 }

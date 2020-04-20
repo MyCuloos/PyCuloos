@@ -1,7 +1,7 @@
-import React from 'react';
-import WorkspaceInitializer from '../components/sections/workspace/WorkspaceInitializer';
-import { WorkspaceContext } from '../context/workspace/workspaceContext';
-import WorkspaceRoot from '../components/sections/workspace/WorkspaceRoot';
+import React from "react"
+import WorkspaceInitializer from "../components/sections/workspace/WorkspaceInitializer"
+import { WorkspaceContext } from "../context/workspace/workspaceContext"
+import WorkspaceRoot from "../components/sections/workspace/WorkspaceRoot"
 
 export default function WorkspacePage() {
   return (
@@ -18,5 +18,5 @@ export default function WorkspacePage() {
         )}
       </WorkspaceContext.Consumer>
     </WorkspaceInitializer>
-  );
+  )
 }

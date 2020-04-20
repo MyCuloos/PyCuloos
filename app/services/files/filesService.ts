@@ -1,7 +1,7 @@
-import fs from 'fs';
-import axios from 'axios';
+import fs from "fs"
+import axios from "axios"
 
-export type FileLocation = 'local' | 'remote';
+export type FileLocation = "local" | "remote"
 
 export const readLocalFile = (
   file: string,
@@ -10,12 +10,12 @@ export const readLocalFile = (
 ) => {
   return fs.readFile(file, (err: any, buffer: Buffer) => {
     if (err) {
-      onError(err);
-      return;
+      onError(err)
+      return
     }
-    onLoaded(buffer.toString('utf8'));
-  });
-};
+    onLoaded(buffer.toString("utf8"))
+  })
+}
 
 export const writeLocalFile = (
   file: string,
@@ -25,12 +25,12 @@ export const writeLocalFile = (
 ) => {
   return fs.writeFile(file, Buffer.from(content), (err: any) => {
     if (err) {
-      onError(err);
-      return;
+      onError(err)
+      return
     }
-    onCompleted();
-  });
-};
+    onCompleted()
+  })
+}
 
 export const readRemoteFile = (
   file: string,
@@ -40,8 +40,8 @@ export const readRemoteFile = (
   axios
     .get(file)
     .then(x => onLoaded(x.data))
-    .catch(onError);
-};
+    .catch(onError)
+}
 
 export const readFile = (
   file: string,
@@ -50,11 +50,11 @@ export const readFile = (
   onError: (error: any) => void
 ) => {
   switch (location) {
-    case 'local':
-      return readLocalFile(file, onLoaded, onError);
-    case 'remote':
-      return readRemoteFile(file, onLoaded, onError);
+    case "local":
+      return readLocalFile(file, onLoaded, onError)
+    case "remote":
+      return readRemoteFile(file, onLoaded, onError)
     default:
-      throw new Error(`Invalid file location ${file}`);
+      throw new Error(`Invalid file location ${file}`)
   }
-};
+}

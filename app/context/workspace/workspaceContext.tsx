@@ -1,53 +1,53 @@
-import React from 'react';
-import { WorkspaceDefinition } from '../../types/settings';
-import { FileLocation } from '../../services/files/filesService';
-import { loadWowkspaceDefinition } from '../../services/workspace/workspaceService';
-import Loader from '../../components/ui/Loader';
+import React from "react"
+import { WorkspaceDefinition } from "../../types/settings"
+import { FileLocation } from "../../services/files/filesService"
+import { loadWowkspaceDefinition } from "../../services/workspace/workspaceService"
+import Loader from "../../components/ui/Loader"
 
 export interface Workspace {
-  loading: boolean;
-  definition: WorkspaceDefinition | undefined;
+  loading: boolean
+  definition: WorkspaceDefinition | undefined
 }
 
 const initialValue = {
-  loading: false
-} as Workspace;
+  loading: false,
+} as Workspace
 
-export const WorkspaceContext = React.createContext<Workspace>(initialValue);
+export const WorkspaceContext = React.createContext<Workspace>(initialValue)
 
 interface WorkspaceProviderProps {
-  file: string;
-  location: FileLocation;
-  children: React.ReactNode;
+  file: string
+  location: FileLocation
+  children: React.ReactNode
 }
 
 export const WorkspaceProvider = ({
   file,
   location,
-  children
+  children,
 }: WorkspaceProviderProps) => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | undefined>();
-  const [value, setValue] = React.useState<Workspace | undefined>();
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [error, setError] = React.useState<string | undefined>()
+  const [value, setValue] = React.useState<Workspace | undefined>()
 
   React.useEffect(() => {
-    setIsLoading(true);
+    setIsLoading(true)
     loadWowkspaceDefinition(
       file,
       location,
       x => {
         setValue({
           loading: false,
-          definition: x
-        });
-        setIsLoading(false);
+          definition: x,
+        })
+        setIsLoading(false)
       },
       err => {
-        setError(err as string);
-        setIsLoading(false);
+        setError(err as string)
+        setIsLoading(false)
       }
-    );
-  }, []);
+    )
+  }, [])
   return (
     <>
       {isLoading ? (
@@ -65,5 +65,5 @@ export const WorkspaceProvider = ({
         </>
       )}
     </>
-  );
-};
+  )
+}

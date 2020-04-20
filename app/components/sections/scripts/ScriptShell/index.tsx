@@ -1,86 +1,84 @@
-import React from 'react';
-import { PythonShell } from 'python-shell';
-import { Row, Col, Button } from 'antd';
-import { CodepenOutlined, SaveOutlined } from '@ant-design/icons';
-import MonacoEditor from 'react-monaco-editor';
-import { PythonSettings } from '../../../../types/settings';
+import React from "react"
+import { PythonShell } from "python-shell"
+import { Row, Col, Button } from "antd"
+import { CodepenOutlined, SaveOutlined } from "@ant-design/icons"
+import MonacoEditor from "react-monaco-editor"
+import { PythonSettings } from "../../../../types/settings"
 import {
   readLocalFile,
-  writeLocalFile
-} from '../../../../services/files/filesService';
-import Loader from '../../../ui/Loader';
+  writeLocalFile,
+} from "../../../../services/files/filesService"
+import Loader from "../../../ui/Loader"
 
 interface Params {
-  scriptPath: string;
-  scriptName: string;
-  scriptArgs: string[];
-  python: PythonSettings;
+  scriptPath: string
+  scriptName: string
+  scriptArgs: string[]
+  python: PythonSettings
 }
 
 export default function ScriptShell({
   scriptPath,
   scriptName,
   scriptArgs,
-  python
+  python,
 }: Params) {
-  const [scriptContent, setScriptContent] = React.useState<string>();
-  const [showSource, setShowSource] = React.useState(false);
-  const [shell, setShell] = React.useState<PythonShell>();
-  const [shellStatus, setShellStatus] = React.useState<'Running' | 'Idle'>(
-    'Idle'
-  );
-  const [scriptOutput, setScriptOutput] = React.useState<
-    string[] | undefined
-  >();
+  const [scriptContent, setScriptContent] = React.useState<string>()
+  const [showSource, setShowSource] = React.useState(false)
+  const [shell, setShell] = React.useState<PythonShell>()
+  const [shellStatus, setShellStatus] = React.useState<"Running" | "Idle">(
+    "Idle"
+  )
+  const [scriptOutput, setScriptOutput] = React.useState<string[] | undefined>()
 
-  const filePath = () => `${scriptPath}/${scriptName}`;
+  const filePath = () => `${scriptPath}/${scriptName}`
 
   React.useEffect(() => {
     readLocalFile(
       filePath(),
       script => setScriptContent(script),
       () => {}
-    );
-  }, []);
+    )
+  }, [])
 
   const appendLines = (lines: string[]) => {
-    setScriptOutput(lines.concat(scriptOutput ?? []));
-  };
+    setScriptOutput(lines.concat(scriptOutput ?? []))
+  }
 
   const clear = () => {
-    shell?.terminate();
-    setShell(undefined);
-    setScriptOutput(undefined);
-  };
+    shell?.terminate()
+    setShell(undefined)
+    setScriptOutput(undefined)
+  }
 
   const runScript = () => {
-    clear();
-    const output = [] as string[];
+    clear()
+    const output = [] as string[]
     const updater = (line: string) => {
-      output.push(line);
-      appendLines(output);
-    };
-    setScriptOutput([]);
-    setShellStatus('Running');
+      output.push(line)
+      appendLines(output)
+    }
+    setScriptOutput([])
+    setShellStatus("Running")
     const options = {
       mode: python.defaultParams.mode,
       pythonPath: python.path,
       pythonOptions: python.defaultParams.options,
       scriptPath,
-      args: scriptArgs
-    };
-    const pyShell = new PythonShell(scriptName, options as any);
-    pyShell.on('message', (message: string) => {
-      updater(message);
-    });
+      args: scriptArgs,
+    }
+    const pyShell = new PythonShell(scriptName, options as any)
+    pyShell.on("message", (message: string) => {
+      updater(message)
+    })
     pyShell.end(err => {
-      setShellStatus('Idle');
+      setShellStatus("Idle")
       if (err) {
-        setScriptOutput([`${err.message} ${err.stack}`]);
+        setScriptOutput([`${err.message} ${err.stack}`])
       }
-    });
-    setShell(pyShell);
-  };
+    })
+    setShell(pyShell)
+  }
 
   const saveScript = (content: string) => {
     writeLocalFile(
@@ -88,8 +86,8 @@ export default function ScriptShell({
       content,
       () => {},
       () => {}
-    );
-  };
+    )
+  }
 
   return (
     <div>
@@ -136,7 +134,7 @@ export default function ScriptShell({
             language="python"
             theme="vs-dark"
             options={{
-              lineNumbers: 'on'
+              lineNumbers: "on",
             }}
             value={scriptContent}
             onChange={x => setScriptContent(x)}
@@ -146,8 +144,8 @@ export default function ScriptShell({
         undefined
       )}
 
-      {shellStatus === 'Running' ? (
-        <div style={{ textAlign: 'center', paddingTop: '1rem' }}>
+      {shellStatus === "Running" ? (
+        <div style={{ textAlign: "center", paddingTop: "1rem" }}>
           <Loader />
         </div>
       ) : (
@@ -155,7 +153,7 @@ export default function ScriptShell({
       )}
 
       {scriptOutput ? (
-        <div style={{ textAlign: 'center', paddingTop: '1rem' }}>
+        <div style={{ textAlign: "center", paddingTop: "1rem" }}>
           {scriptOutput.reverse().map((x, index) => (
             <p key={index}>{x}</p>
           ))}
@@ -164,5 +162,5 @@ export default function ScriptShell({
         undefined
       )}
     </div>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import { WorkspaceDefinition } from '../../types/settings';
-import { FileLocation, readFile } from '../files/filesService';
+import { WorkspaceDefinition } from "../../types/settings"
+import { FileLocation, readFile } from "../files/filesService"
 
 const parseWorkspaceDefinition = (content: string) =>
-  JSON.parse(content) as WorkspaceDefinition;
+  JSON.parse(content) as WorkspaceDefinition
 
 export const loadWowkspaceDefinition = (
   file: string,
@@ -14,9 +14,9 @@ export const loadWowkspaceDefinition = (
     file,
     fileLocation,
     (content: string) => {
-      const parsedSettings = parseWorkspaceDefinition(content);
-      onLoaded(parsedSettings);
+      const parsedSettings = parseWorkspaceDefinition(content)
+      onLoaded(parsedSettings)
     },
     onError
-  );
-};
+  )
+}

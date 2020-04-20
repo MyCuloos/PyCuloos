@@ -1,35 +1,35 @@
-import React from 'react';
-import { LaptopOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-import { ScriptGroup, ScriptDefinition } from '../../../../types/settings';
+import React from "react"
+import { LaptopOutlined } from "@ant-design/icons"
+import { Menu } from "antd"
+import { ScriptGroup, ScriptDefinition } from "../../../../types/settings"
 
 interface Params {
-  scriptGroups: ScriptGroup[];
-  onScriptSelected: (value: SelectedScript) => void;
+  scriptGroups: ScriptGroup[]
+  onScriptSelected: (value: SelectedScript) => void
 }
 
 interface SelectedScript {
-  group: ScriptGroup;
-  script: ScriptDefinition;
+  group: ScriptGroup
+  script: ScriptDefinition
 }
 
 export default function WorkspaceSidebar({
   scriptGroups,
-  onScriptSelected
+  onScriptSelected,
 }: Params) {
   const handleMenuSelected = (group: ScriptGroup, script: ScriptDefinition) => {
     onScriptSelected({
       group,
-      script
-    });
-  };
+      script,
+    })
+  }
   return (
     <>
       <Menu
         mode="inline"
-        defaultSelectedKeys={['0']}
-        defaultOpenKeys={['sub0']}
-        style={{ height: '100%', borderRight: 0 }}
+        defaultSelectedKeys={["0"]}
+        defaultOpenKeys={["sub0"]}
+        style={{ height: "100%", borderRight: 0 }}
       >
         {scriptGroups.map((group, index) => (
           <Menu.SubMenu
@@ -53,5 +53,5 @@ export default function WorkspaceSidebar({
         ))}
       </Menu>
     </>
-  );
+  )
 }
