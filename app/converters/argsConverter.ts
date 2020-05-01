@@ -9,4 +9,4 @@ export const initArgumanets = (args: ArgDefinition[]): ScriptArgument[] =>
   args.map(initArg)
 
 export const buildArgsStrings = (values: ScriptArgument[]) =>
-  values.map(x => `${x.definition.parameterName ?? ""} ${x.value}`.trim())
+  values.map(x => `${x.definition.parameterName ?? ""} ${x.value ?? ""}`.trim())

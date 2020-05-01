@@ -9,6 +9,7 @@
   "scriptGroups": [
     {
       "name": "Simple Scripts",
+      "type": "python",
       "options": {
         "basePath": "examples/simple-repo/scripts"
       },

@@ -1,45 +1,35 @@
 import React from "react"
 import { Typography } from "antd"
-import {
-  ScriptDefinition,
-  PythonSettings,
-  ScriptGroup,
-} from "../../../../types/settings"
-import ScriptShell from "../ScriptShell"
 import ScriptArgsInput from "../ScriptArgsInput"
 import { ScriptArgument } from "../../../../types/scripts"
-import { buildArgsStrings } from "../../../../converters/argsConverter"
+import { SelectedScriptItem } from "../../../../types/ui"
+import ScriptShell from "../ScriptShell"
 
 interface Props {
-  group: ScriptGroup
-  script: ScriptDefinition
-  python: PythonSettings
+  script: SelectedScriptItem
 }
 
-export function ScriptRoot({ script, python, group }: Props) {
+export function ScriptRoot({ script }: Props) {
   const [argValues, setArgValues] = React.useState<ScriptArgument[]>([])
-  const getArgs = (): string[] => buildArgsStrings(argValues)
 
   return (
     <div>
       <div>
-        <Typography.Title>{script.name}</Typography.Title>
+        <Typography.Title>{script.definition.name}</Typography.Title>
         <Typography.Title level={3}>
           <strong>Script: </strong>
-          <span style={{ fontWeight: "normal" }}>{script.path}</span>
+          <span style={{ fontWeight: "normal" }}>{script.definition.path}</span>
         </Typography.Title>
       </div>
-      {script.args ? (
-        <ScriptArgsInput args={script.args} onChange={setArgValues} />
+      {script.definition.args ? (
+        <ScriptArgsInput
+          args={script.definition.args}
+          onChange={setArgValues}
+        />
       ) : (
         undefined
       )}
-      <ScriptShell
-        scriptName={script.path}
-        scriptArgs={getArgs()}
-        scriptPath={group.options.basePath}
-        python={python}
-      />
+      <ScriptShell processor={script.processor} scriptArgs={argValues} />
     </div>
   )
 }

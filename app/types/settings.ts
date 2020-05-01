@@ -1,5 +1,6 @@
 import { ArgDefinition } from "./scripts"
 
+export type ScriptType = "python" | "terminal"
 export type PythonExecutionMode = "text" | "json" | "binary"
 
 export interface PythonInvocationParams {
@@ -14,6 +15,7 @@ export interface PythonSettings {
 
 export interface ScriptGroup {
   name: string
+  type: ScriptType
   options: ScriptGroupOptions
   scripts: ScriptDefinition[]
 }

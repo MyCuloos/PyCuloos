@@ -29,3 +29,20 @@ export interface ScriptArgument {
   definition: ArgDefinition
   value: ArgValue
 }
+
+export interface ScriptError {
+  message: string
+  stackTrace: string | undefined
+}
+
+export interface ScriptProcessor {
+  start(
+    args: ScriptArgument[],
+    onDataReceived: (data: any) => void,
+    onCompleted: (data: any) => void,
+    onError: (error: ScriptError) => void
+  ): void
+  stop(): void
+  readScript(onLoaded: (content: string) => void): void
+  updateScript(content: string): void
+}

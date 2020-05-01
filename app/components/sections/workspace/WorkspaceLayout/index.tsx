@@ -8,30 +8,35 @@ import {
   ScriptGroup,
 } from "../../../../types/settings"
 import { ScriptRoot } from "../../scripts/ScriptRoot"
+import { initScript } from "../../../../services/scripts/scriptInitializer"
+import { SelectedScriptItem } from "../../../../types/ui"
 
 interface Params {
   definition: WorkspaceDefinition
 }
 
-interface SelectedScript {
-  group: ScriptGroup
-  script: ScriptDefinition
-}
-
 export default function WorkspaceLayout({ definition }: Params) {
-  const [script, setScript] = React.useState<SelectedScript | undefined>()
+  const [script, setScript] = React.useState<SelectedScriptItem | undefined>()
+
+  const setCurrentScript = (
+    group: ScriptGroup,
+    scriptDefinition: ScriptDefinition
+  ) => {
+    setScript(initScript(group, scriptDefinition, definition))
+  }
+
   React.useEffect(() => {
-    setScript({
-      group: definition.scriptGroups[0],
-      script: definition.scriptGroups[0].scripts[0],
-    })
+    setCurrentScript(
+      definition.scriptGroups[0],
+      definition.scriptGroups[0].scripts[0]
+    )
   }, [])
   return (
     <Layout style={{ height: "100%" }}>
       <Layout.Sider width={200}>
         <WorkspaceSidebar
           scriptGroups={definition.scriptGroups}
-          onScriptSelected={x => setScript(x)}
+          onScriptSelected={x => setCurrentScript(x.group, x.script)}
         />
       </Layout.Sider>
       <Layout style={{ padding: "0 24px 24px" }}>
@@ -44,15 +49,7 @@ export default function WorkspaceLayout({ definition }: Params) {
             background: "#fff",
           }}
         >
-          {script ? (
-            <ScriptRoot
-              script={script.script}
-              group={script.group}
-              python={definition.python}
-            />
-          ) : (
-            undefined
-          )}
+          {script ? <ScriptRoot script={script} /> : undefined}
         </Layout.Content>
       </Layout>
     </Layout>
