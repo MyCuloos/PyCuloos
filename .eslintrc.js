@@ -7,6 +7,7 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/no-array-index-key': 'off',
     'react/jsx-wrap-multilines': 'warn',
+    'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/no-explicit-any': 'off'
   },
   settings: {

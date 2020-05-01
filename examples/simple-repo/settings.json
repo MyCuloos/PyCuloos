@@ -21,7 +21,7 @@
             {
               "name": "Param1",
               "type": "int",
-              "default": 10
+              "default": 30
             },
             {
               "name": "Param2",

@@ -281,6 +281,7 @@
     "electron-debug": "^3.0.1",
     "electron-log": "^4.0.6",
     "electron-updater": "^4.2.0",
+    "glamor": "^2.20.40",
     "history": "^4.10.1",
     "python-shell": "^1.0.8",
     "react": "^16.12.0",

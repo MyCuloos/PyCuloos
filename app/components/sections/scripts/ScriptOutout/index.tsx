@@ -1,19 +1,21 @@
 import React from "react"
+import ScrollToBottom from "react-scroll-to-bottom"
+import { css } from "glamor"
 
 interface Props {
   output: string[]
   linePrefix: string
 }
 
-const rootStyles = {
+const root = css({
   flex: 1,
   paddingTop: "1rem",
   color: "green",
   backgroundColor: "black",
   position: "relative",
-}
+})
 
-const container = {
+const container = css({
   overflowY: "auto",
   position: "absolute",
   height: "100%",
@@ -21,7 +23,7 @@ const container = {
   width: "100%",
   left: 0,
   top: 0,
-}
+})
 
 const lineStyles = {
   marginBottom: 5,
@@ -30,15 +32,15 @@ const lineStyles = {
 
 const ScriptOutout = ({ output, linePrefix }: Props) => {
   return (
-    <div style={rootStyles as any}>
-      <div style={container as any}>
+    <div {...root}>
+      <ScrollToBottom className={container}>
         {output.map((x, index) => (
           <p key={index} style={lineStyles}>
             {linePrefix}
             {x}
           </p>
         ))}
-      </div>
+      </ScrollToBottom>
     </div>
   )
 }
