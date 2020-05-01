@@ -1,5 +1,5 @@
 import React from "react"
-import { Typography, Collapse, Space } from "antd"
+import { Typography, Collapse } from "antd"
 import { RightOutlined } from "@ant-design/icons"
 import ScriptArgsInput from "../ScriptArgsInput"
 import { ScriptArgument } from "../../../../types/scripts"
@@ -13,7 +13,7 @@ interface Props {
 
 export function ScriptRoot({ script, onArgsChange }: Props) {
   return (
-    <div>
+    <div className="fx-col fx-1">
       <div>
         {/* <Typography.Title>{script.definition.name}</Typography.Title> */}
         <Typography.Title level={3}>
@@ -33,7 +33,7 @@ export function ScriptRoot({ script, onArgsChange }: Props) {
         </Collapse.Panel>
       </Collapse>
 
-      <div style={{ marginTop: 12 }}>
+      <div className="fx-col fx-1" style={{ marginTop: 12 }}>
         <ScriptShell
           processor={script.processor}
           scriptArgs={script.arguments}

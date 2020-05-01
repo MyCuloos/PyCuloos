@@ -2,8 +2,8 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-@import '~@fortawesome/fontawesome-free/css/all.css';
-@import '~antd/dist/antd.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~antd/dist/antd.css";
 
 body {
   /* position: relative;
@@ -57,3 +57,27 @@ a {
   text-decoration: none;
   cursor: pointer;
 } */
+
+.fx-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.fx-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.fx-1 {
+  flex: 1;
+}
+
+.abs-container {
+  overflow-y: auto;
+  position: absolute;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}

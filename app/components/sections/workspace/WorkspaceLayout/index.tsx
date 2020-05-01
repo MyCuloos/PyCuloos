@@ -56,6 +56,8 @@ export default function WorkspaceLayout({ definition }: Params) {
             margin: 0,
             minHeight: 280,
             background: "#fff",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           {script ? (

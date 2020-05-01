@@ -1,17 +1,21 @@
 import React from "react"
-import { Row, Col, Button } from "antd"
+import { Row, Col, Button, Space } from "antd"
 import { CodepenOutlined, SaveOutlined } from "@ant-design/icons"
 import MonacoEditor from "react-monaco-editor"
-import Loader from "../../../ui/Loader"
 import {
   ScriptProcessor,
   ScriptArgument,
   ScriptError,
 } from "../../../../types/scripts"
+import ScriptOutout from "../ScriptOutout"
 
 interface Params {
   processor: ScriptProcessor
   scriptArgs: ScriptArgument[]
+}
+
+const rootStyle = {
+  flex: 1,
 }
 
 export default function ScriptShell({ processor, scriptArgs }: Params) {
@@ -66,7 +70,7 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
   }
 
   return (
-    <div>
+    <div className="fx-1 fx-col">
       <Row justify="center">
         <Col>
           {shellStatus === "Idle" ? (
@@ -131,17 +135,8 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
         undefined
       )}
 
-      {shellStatus === "Running" ? (
-        <div style={{ textAlign: "center", paddingTop: "1rem" }}>
-          <Loader />
-        </div>
-      ) : (
-        undefined
-      )}
-      <div style={{ textAlign: "center", paddingTop: "1rem" }}>
-        {scriptOutput.map((x, index) => (
-          <p key={index}>{x}</p>
-        ))}
+      <div className="fx-1 fx-col">
+        <ScriptOutout output={scriptOutput} />
       </div>
     </div>
   )
