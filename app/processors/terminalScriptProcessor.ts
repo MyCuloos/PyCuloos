@@ -4,14 +4,23 @@ import { ScriptProcessorBase } from "./abstractions/processorBase"
 import { ScriptArgument, ScriptError } from "../types/scripts"
 import { buildArgsString } from "../converters/argsConverter"
 
+function bash(command: string) {
+  return `bash ${command}`
+}
+
 function scriptCommand(commandName: string, args: ScriptArgument[]) {
   return args.length > 0
-    ? `${commandName} ${buildArgsString(args)}`
-    : commandName
+    ? `${bash(commandName)} ${buildArgsString(args)}`
+    : bash(commandName)
 }
 
 export class TerminalScriptProcessor extends ScriptProcessorBase {
   private process: ChildProcess | undefined
+
+  constructor(scriptPath: string, scriptName: string) {
+    super(scriptPath, scriptName)
+    shell.cd(this.scriptPath)
+  }
 
   start(
     args: ScriptArgument[],
@@ -22,8 +31,6 @@ export class TerminalScriptProcessor extends ScriptProcessorBase {
     if (this.process) {
       this.stop()
     }
-
-    shell.cd(this.scriptPath)
     const process = shell.exec(scriptCommand(this.scriptName, args), {
       async: true,
     })
