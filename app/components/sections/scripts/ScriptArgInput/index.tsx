@@ -3,6 +3,7 @@ import StringArgInput from "./components/StringArgInput"
 import NumberArgInput from "./components/NumberArgInput"
 import FilepathArgInput from "./components/FilepahArgInput"
 import { ArgValue, ArgDefinition } from "../../../../types/scripts"
+import ArgOptionSelector from "./components/ArgOptionSelector"
 
 interface Props {
   definition: ArgDefinition
@@ -11,6 +12,17 @@ interface Props {
 }
 
 export default function ScriptArgInput({ definition, value, onChange }: Props) {
+  if (definition.options) {
+    return (
+      <ArgOptionSelector
+        options={definition.options}
+        value={value}
+        onChange={onChange}
+        allowBlank
+      />
+    )
+  }
+
   switch (definition.type) {
     case "string":
       return (
