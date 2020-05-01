@@ -7,6 +7,8 @@ import {
 } from "../../../../types/settings"
 import ScriptShell from "../ScriptShell"
 import ScriptArgsInput from "../ScriptArgsInput"
+import { ScriptArgument } from "../../../../types/scripts"
+import { buildArgsStrings } from "../../../../converters/argsConverter"
 
 interface Props {
   group: ScriptGroup
@@ -15,11 +17,8 @@ interface Props {
 }
 
 export function ScriptRoot({ script, python, group }: Props) {
-  const [argString, setArgString] = React.useState("")
-  const getArgs = (): string[] =>
-    script.args
-      ?.map(x => x.default?.toString() as string)
-      .filter(x => x !== undefined) ?? []
+  const [argValues, setArgValues] = React.useState<ScriptArgument[]>([])
+  const getArgs = (): string[] => buildArgsStrings(argValues)
 
   return (
     <div>
@@ -31,7 +30,7 @@ export function ScriptRoot({ script, python, group }: Props) {
         </Typography.Title>
       </div>
       {script.args ? (
-        <ScriptArgsInput args={script.args} onChange={setArgString} />
+        <ScriptArgsInput args={script.args} onChange={setArgValues} />
       ) : (
         undefined
       )}

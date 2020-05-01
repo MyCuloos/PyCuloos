@@ -7,7 +7,7 @@ def run_culo(index, path, name):
 
 
 if __name__ == "__main__":
-    _, cycles, path = sys.argv
+    _, cycles, path, *other = sys.argv
     name = sys.argv[3] if len(sys.argv) > 3 else ""
     for i in range(int(cycles)):
         print(run_culo(i, path, name))

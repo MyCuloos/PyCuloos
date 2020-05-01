@@ -45,9 +45,13 @@ export default function ScriptShell({
     setScriptOutput(lines.concat(scriptOutput ?? []))
   }
 
-  const clear = () => {
+  const stopScript = () => {
     shell?.terminate()
     setShell(undefined)
+  }
+
+  const clear = () => {
+    stopScript()
     setScriptOutput(undefined)
   }
 
@@ -93,13 +97,24 @@ export default function ScriptShell({
     <div>
       <Row justify="center">
         <Col>
-          <Button
-            onClick={() => runScript()}
-            type="primary"
-            style={{ margin: 5 }}
-          >
-            RUN
-          </Button>
+          {shellStatus === "Idle" ? (
+            <Button
+              onClick={() => runScript()}
+              type="primary"
+              style={{ margin: 5 }}
+            >
+              RUN
+            </Button>
+          ) : (
+            <Button
+              onClick={() => stopScript()}
+              type="primary"
+              danger
+              style={{ margin: 5 }}
+            >
+              STOP
+            </Button>
+          )}
         </Col>
         <Col>
           <Button onClick={() => clear()} style={{ margin: 5 }}>

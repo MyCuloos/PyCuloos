@@ -19,7 +19,7 @@
           "args": [
             {
               "name": "Param1",
-              "type": "number",
+              "type": "int",
               "default": 10
             },
             {

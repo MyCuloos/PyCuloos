@@ -7,3 +7,6 @@ const initArg = (arg: ArgDefinition): ScriptArgument => ({
 
 export const initArgumanets = (args: ArgDefinition[]): ScriptArgument[] =>
   args.map(initArg)
+
+export const buildArgsStrings = (values: ScriptArgument[]) =>
+  values.map(x => `${x.definition.parameterName ?? ""} ${x.value}`.trim())

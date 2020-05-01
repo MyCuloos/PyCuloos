@@ -1,30 +1,34 @@
 import React from "react"
 import { Space, Typography } from "antd"
-import { ScriptArg } from "../../../../types/settings"
 import ScriptArgInput from "../ScriptArgInput"
-import { ScriptArgument, ArgValue } from "../../../../types/scripts"
+import {
+  ScriptArgument,
+  ArgValue,
+  ArgDefinition,
+} from "../../../../types/scripts"
 import { initArgumanets } from "../../../../converters/argsConverter"
 
 interface Props {
-  args: ScriptArg[]
-  onChange: (value: string) => void
+  args: ArgDefinition[]
+  onChange: (value: ScriptArgument[]) => void
 }
 
 export default function ScriptArgsInput({ args, onChange }: Props) {
-  const [argValues, setArgValues] = React.useState<ScriptArgument[]>(
-    initArgumanets(args)
-  )
+  const [argValues, setArgValues] = React.useState<ScriptArgument[]>([])
 
-  const buildArgsString = (values: ScriptArgument[]) =>
-    values
-      .map(x => `${x.definition.parameterName ?? ""} ${x.value}`.trim())
-      .join(" ")
+  const updateArguments = (newValue: ScriptArgument[]) => {
+    setArgValues(newValue)
+    onChange(newValue)
+  }
+
+  React.useEffect(() => {
+    updateArguments(initArgumanets(args))
+  }, [])
 
   const handleChange = (index: number, value: ArgValue) => {
     const newVal = [...argValues]
     newVal[index].value = value
-    setArgValues(newVal)
-    onChange(buildArgsString(newVal))
+    updateArguments(newVal)
   }
 
   return (
