@@ -17,11 +17,6 @@ function scriptCommand(commandName: string, args: ScriptArgument[]) {
 export class TerminalScriptProcessor extends ScriptProcessorBase {
   private process: ChildProcess | undefined
 
-  constructor(scriptPath: string, scriptName: string) {
-    super(scriptPath, scriptName)
-    shell.cd(this.scriptPath)
-  }
-
   start(
     args: ScriptArgument[],
     onDataReceived: (data: any) => void,
@@ -31,6 +26,9 @@ export class TerminalScriptProcessor extends ScriptProcessorBase {
     if (this.process) {
       this.stop()
     }
+
+    shell.cd(__dirname)
+    shell.cd(this.scriptPath)
     const process = shell.exec(scriptCommand(this.scriptName, args), {
       async: true,
     })

@@ -20,15 +20,12 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
   const [shellStatus, setShellStatus] = React.useState<"Running" | "Idle">(
     "Idle"
   )
-  const [scriptOutput, setScriptOutput] = React.useState<string[] | undefined>()
+  const [scriptOutput, setScriptOutput] = React.useState<string[]>([])
+  const [buffer, setBuffer] = React.useState<string[]>([])
 
   React.useEffect(() => {
     processor.readScript(script => setScriptContent(script))
   }, [])
-
-  const appendLines = (lines: string[]) => {
-    setScriptOutput(lines.concat(scriptOutput ?? []))
-  }
 
   const stopScript = () => {
     processor.stop()
@@ -36,13 +33,13 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
 
   const clear = () => {
     stopScript()
-    setScriptOutput(undefined)
+    setScriptOutput([])
+    setBuffer([])
   }
 
   const onUpdate = (data: any) => {
-    const output = [] as string[]
-    output.push(data)
-    appendLines(output)
+    buffer.push(data)
+    setScriptOutput([...buffer])
   }
 
   const onCompleted = () => {
@@ -55,10 +52,9 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
 
   const runScript = () => {
     clear()
-    setScriptOutput([])
     setShellStatus("Running")
 
-    processor.start(scriptArgs, onUpdate, onCompleted, onError)
+    processor.start(scriptArgs, data => onUpdate(data), onCompleted, onError)
   }
 
   const saveScript = (content: string) => {
@@ -138,16 +134,11 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
       ) : (
         undefined
       )}
-
-      {scriptOutput ? (
-        <div style={{ textAlign: "center", paddingTop: "1rem" }}>
-          {scriptOutput.reverse().map((x, index) => (
-            <p key={index}>{x}</p>
-          ))}
-        </div>
-      ) : (
-        undefined
-      )}
+      <div style={{ textAlign: "center", paddingTop: "1rem" }}>
+        {scriptOutput.map((x, index) => (
+          <p key={index}>{x}</p>
+        ))}
+      </div>
     </div>
   )
 }
