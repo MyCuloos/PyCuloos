@@ -1,5 +1,6 @@
 import React from "react"
-import { Typography } from "antd"
+import { Typography, Collapse, Space } from "antd"
+import { RightOutlined } from "@ant-design/icons"
 import ScriptArgsInput from "../ScriptArgsInput"
 import { ScriptArgument } from "../../../../types/scripts"
 import { SelectedScriptItem } from "../../../../types/ui"
@@ -14,14 +15,30 @@ export function ScriptRoot({ script, onArgsChange }: Props) {
   return (
     <div>
       <div>
-        <Typography.Title>{script.definition.name}</Typography.Title>
+        {/* <Typography.Title>{script.definition.name}</Typography.Title> */}
         <Typography.Title level={3}>
           <strong>Script: </strong>
           <span style={{ fontWeight: "normal" }}>{script.definition.path}</span>
         </Typography.Title>
       </div>
-      <ScriptArgsInput values={script.arguments} onChange={onArgsChange} />
-      <ScriptShell processor={script.processor} scriptArgs={script.arguments} />
+      <Collapse
+        bordered={false}
+        defaultActiveKey={["1"]}
+        expandIcon={({ isActive }) => (
+          <RightOutlined rotate={isActive ? 90 : 0} />
+        )}
+      >
+        <Collapse.Panel key="1" header="Params">
+          <ScriptArgsInput values={script.arguments} onChange={onArgsChange} />
+        </Collapse.Panel>
+      </Collapse>
+
+      <div style={{ marginTop: 12 }}>
+        <ScriptShell
+          processor={script.processor}
+          scriptArgs={script.arguments}
+        />
+      </div>
     </div>
   )
 }

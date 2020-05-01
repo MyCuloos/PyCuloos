@@ -1,12 +1,16 @@
 import React from "react"
 import { Breadcrumb } from "antd"
+import { SelectedScriptItem } from "../../../../types/ui"
 
-export function WorkspaceBreadcrumb() {
+interface Props {
+  script: SelectedScriptItem
+}
+
+export function WorkspaceBreadcrumb({ script }: Props) {
   return (
     <Breadcrumb style={{ margin: "16px 0" }}>
-      <Breadcrumb.Item>Home</Breadcrumb.Item>
-      <Breadcrumb.Item>List</Breadcrumb.Item>
-      <Breadcrumb.Item>App</Breadcrumb.Item>
+      <Breadcrumb.Item>{script.group.name}</Breadcrumb.Item>
+      <Breadcrumb.Item>{script.definition.name}</Breadcrumb.Item>
     </Breadcrumb>
   )
 }

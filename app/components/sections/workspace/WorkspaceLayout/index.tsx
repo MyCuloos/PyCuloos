@@ -49,7 +49,7 @@ export default function WorkspaceLayout({ definition }: Params) {
         />
       </Layout.Sider>
       <Layout style={{ padding: "0 24px 24px" }}>
-        <WorkspaceBreadcrumb />
+        {/* {script ? <WorkspaceBreadcrumb script={script} /> : undefined} */}
         <Layout.Content
           style={{
             padding: 24,
