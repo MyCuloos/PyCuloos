@@ -8,10 +8,10 @@
   },
   "scriptGroups": [
     {
-      "name": "Simple Scripts",
+      "name": "Python Scripts",
       "type": "python",
       "options": {
-        "basePath": "examples/simple-repo/scripts"
+        "basePath": "examples/simple-repo/python-scripts"
       },
       "scripts": [
         {
@@ -69,6 +69,26 @@
                 { "type": "minValue", "params": 0 },
                 { "type": "maxValue", "params": 100 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bash Scripts",
+      "type": "terminal",
+      "options": {
+        "basePath": "examples/simple-repo/bash-scripts"
+      },
+      "scripts": [
+        {
+          "name": "Echo",
+          "path": "echo.sh",
+          "args": [
+            {
+              "name": "Param",
+              "type": "string",
+              "editable": false
             }
           ]
         }

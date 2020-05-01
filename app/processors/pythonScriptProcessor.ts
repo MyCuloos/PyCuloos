@@ -1,20 +1,18 @@
 import { PythonShell } from "python-shell"
-import { ScriptProcessor, ScriptArgument, ScriptError } from "../types/scripts"
 import { PythonSettings } from "../types/settings"
-import { readLocalFile, writeLocalFile } from "../services/files/filesService"
 import { buildArgsStrings } from "../converters/argsConverter"
+import { ScriptProcessorBase } from "./abstractions/processorBase"
+import { ScriptArgument, ScriptError } from "../types/scripts"
 
-export class PythonScriptProcessor implements ScriptProcessor {
+export class PythonScriptProcessor extends ScriptProcessorBase {
   private shell: PythonShell | undefined
 
   constructor(
-    private scriptPath: string,
-    private scriptName: string,
+    scriptPath: string,
+    scriptName: string,
     private settings: PythonSettings
-  ) {}
-
-  private filePath() {
-    return `${this.scriptPath}/${this.scriptName}`
+  ) {
+    super(scriptPath, scriptName)
   }
 
   start(
@@ -49,22 +47,5 @@ export class PythonScriptProcessor implements ScriptProcessor {
   stop(): void {
     this.shell?.terminate()
     this.shell = undefined
-  }
-
-  readScript(onLoaded: (content: string) => void): void {
-    readLocalFile(
-      this.filePath(),
-      script => onLoaded(script),
-      () => {}
-    )
-  }
-
-  updateScript(content: string): void {
-    writeLocalFile(
-      this.filePath(),
-      content,
-      () => {},
-      () => {}
-    )
   }
 }

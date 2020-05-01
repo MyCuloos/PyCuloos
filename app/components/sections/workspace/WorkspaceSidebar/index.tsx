@@ -43,7 +43,7 @@ export default function WorkspaceSidebar({
           >
             {group.scripts.map((script, scriptIndex) => (
               <Menu.Item
-                key={index + scriptIndex}
+                key={`${index}-${scriptIndex}`}
                 onClick={() => handleMenuSelected(group, script)}
               >
                 {script.name}

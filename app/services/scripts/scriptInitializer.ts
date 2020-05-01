@@ -6,6 +6,7 @@ import {
 import { SelectedScriptItem } from "../../types/ui"
 import { PythonScriptProcessor } from "../../processors/pythonScriptProcessor"
 import { initArgumanets } from "../../converters/argsConverter"
+import { TerminalScriptProcessor } from "../../processors/terminalScriptProcessor"
 
 const createProcessor = (
   group: ScriptGroup,
@@ -18,6 +19,11 @@ const createProcessor = (
         group.options.basePath,
         definition.path,
         workspace.python
+      )
+    case "terminal":
+      return new TerminalScriptProcessor(
+        group.options.basePath,
+        definition.path
       )
     default:
       throw new Error("Not implemented")
