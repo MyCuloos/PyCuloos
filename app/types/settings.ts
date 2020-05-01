@@ -1,3 +1,5 @@
+import { ArgDefinition } from "./scripts"
+
 export type PythonExecutionMode = "text" | "json" | "binary"
 
 export interface PythonInvocationParams {
@@ -19,33 +21,7 @@ export interface ScriptGroup {
 export interface ScriptDefinition {
   name: string
   path: string
-  args: ScriptArg[] | undefined
-}
-
-export type ArgType = "string" | "number" | "filepath"
-export type ArgValueType = string | number
-
-export interface ArgOption {
-  value: ArgValueType
-  label: string
-}
-
-export interface ArgValidator {
-  type: string
-  params: any
-}
-
-export interface ArgOptions {
-  values: ArgOption[]
-}
-
-export interface ScriptArg {
-  name: string
-  type: ArgType
-  default: ArgValueType | undefined
-  options: ArgOption[] | undefined
-  editable: boolean | undefined
-  validators: ArgValidator[] | undefined
+  args: ArgDefinition[] | undefined
 }
 
 export interface ScriptGroupOptions {

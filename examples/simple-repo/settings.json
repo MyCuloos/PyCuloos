@@ -18,15 +18,18 @@
           "path": "my_culo.py",
           "args": [
             {
+              "name": "Param1",
               "type": "number",
               "default": 10
             },
             {
+              "name": "Param2",
               "type": "string",
               "default": "AAAABBBB",
               "editable": false
             },
             {
+              "name": "Param3",
               "type": "string",
               "options": [
                 {
@@ -40,6 +43,7 @@
               ]
             },
             {
+              "name": "Param4",
               "type": "filepath"
             }
           ]
