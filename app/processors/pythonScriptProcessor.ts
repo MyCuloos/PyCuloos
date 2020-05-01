@@ -1,15 +1,8 @@
 import { PythonShell } from "python-shell"
-import {
-  ScriptProcessor,
-  ScriptArgument,
-  ScriptError,
-} from "../../types/scripts"
-import { PythonSettings } from "../../types/settings"
-import {
-  readLocalFile,
-  writeLocalFile,
-} from "../../services/files/filesService"
-import { buildArgsStrings } from "../../converters/argsConverter"
+import { ScriptProcessor, ScriptArgument, ScriptError } from "../types/scripts"
+import { PythonSettings } from "../types/settings"
+import { readLocalFile, writeLocalFile } from "../services/files/filesService"
+import { buildArgsStrings } from "../converters/argsConverter"
 
 export class PythonScriptProcessor implements ScriptProcessor {
   private shell: PythonShell | undefined

@@ -4,7 +4,7 @@ import {
   WorkspaceDefinition,
 } from "../../types/settings"
 import { SelectedScriptItem } from "../../types/ui"
-import { PythonScriptProcessor } from "../../components/processors/pythonScriptProcessor"
+import { PythonScriptProcessor } from "../../processors/pythonScriptProcessor"
 
 const createProcessor = (
   group: ScriptGroup,
