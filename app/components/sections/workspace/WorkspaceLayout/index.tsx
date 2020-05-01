@@ -10,6 +10,7 @@ import {
 import { ScriptRoot } from "../../scripts/ScriptRoot"
 import { initScript } from "../../../../services/scripts/scriptInitializer"
 import { SelectedScriptItem } from "../../../../types/ui"
+import { ScriptArgument } from "../../../../types/scripts"
 
 interface Params {
   definition: WorkspaceDefinition
@@ -31,6 +32,14 @@ export default function WorkspaceLayout({ definition }: Params) {
       definition.scriptGroups[0].scripts[0]
     )
   }, [])
+
+  const handleArgsUpdate = (values: ScriptArgument[]) => {
+    setScript({
+      ...(script as SelectedScriptItem),
+      arguments: values,
+    })
+  }
+
   return (
     <Layout style={{ height: "100%" }}>
       <Layout.Sider width={200}>
@@ -49,7 +58,11 @@ export default function WorkspaceLayout({ definition }: Params) {
             background: "#fff",
           }}
         >
-          {script ? <ScriptRoot script={script} /> : undefined}
+          {script ? (
+            <ScriptRoot script={script} onArgsChange={handleArgsUpdate} />
+          ) : (
+            undefined
+          )}
         </Layout.Content>
       </Layout>
     </Layout>

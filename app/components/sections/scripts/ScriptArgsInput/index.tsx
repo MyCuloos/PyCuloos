@@ -1,39 +1,23 @@
 import React from "react"
 import { Space, Typography } from "antd"
 import ScriptArgInput from "../ScriptArgInput"
-import {
-  ScriptArgument,
-  ArgValue,
-  ArgDefinition,
-} from "../../../../types/scripts"
-import { initArgumanets } from "../../../../converters/argsConverter"
+import { ScriptArgument, ArgValue } from "../../../../types/scripts"
 
 interface Props {
-  args: ArgDefinition[]
+  values: ScriptArgument[]
   onChange: (value: ScriptArgument[]) => void
 }
 
-export default function ScriptArgsInput({ args, onChange }: Props) {
-  const [argValues, setArgValues] = React.useState<ScriptArgument[]>([])
-
-  const updateArguments = (newValue: ScriptArgument[]) => {
-    setArgValues(newValue)
-    onChange(newValue)
-  }
-
-  React.useEffect(() => {
-    updateArguments(initArgumanets(args))
-  }, [])
-
-  const handleChange = (index: number, value: ArgValue) => {
-    const newVal = [...argValues]
-    newVal[index].value = value
-    updateArguments(newVal)
+export default function ScriptArgsInput({ values, onChange }: Props) {
+  const handleChange = (index: number, argValue: ArgValue) => {
+    const newVal = [...values]
+    newVal[index].value = argValue
+    onChange(newVal)
   }
 
   return (
     <Space direction="vertical">
-      {argValues.map((x, index) => (
+      {values.map((x, index) => (
         <Space key={index}>
           <Typography.Text>{x.definition.name}</Typography.Text>
           <ScriptArgInput

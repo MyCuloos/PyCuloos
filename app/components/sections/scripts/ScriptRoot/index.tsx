@@ -7,11 +7,10 @@ import ScriptShell from "../ScriptShell"
 
 interface Props {
   script: SelectedScriptItem
+  onArgsChange: (values: ScriptArgument[]) => void
 }
 
-export function ScriptRoot({ script }: Props) {
-  const [argValues, setArgValues] = React.useState<ScriptArgument[]>([])
-
+export function ScriptRoot({ script, onArgsChange }: Props) {
   return (
     <div>
       <div>
@@ -21,15 +20,8 @@ export function ScriptRoot({ script }: Props) {
           <span style={{ fontWeight: "normal" }}>{script.definition.path}</span>
         </Typography.Title>
       </div>
-      {script.definition.args ? (
-        <ScriptArgsInput
-          args={script.definition.args}
-          onChange={setArgValues}
-        />
-      ) : (
-        undefined
-      )}
-      <ScriptShell processor={script.processor} scriptArgs={argValues} />
+      <ScriptArgsInput values={script.arguments} onChange={onArgsChange} />
+      <ScriptShell processor={script.processor} scriptArgs={script.arguments} />
     </div>
   )
 }

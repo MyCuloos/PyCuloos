@@ -5,6 +5,7 @@ import {
 } from "../../types/settings"
 import { SelectedScriptItem } from "../../types/ui"
 import { PythonScriptProcessor } from "../../processors/pythonScriptProcessor"
+import { initArgumanets } from "../../converters/argsConverter"
 
 const createProcessor = (
   group: ScriptGroup,
@@ -31,4 +32,5 @@ export const initScript = (
   group,
   definition: script,
   processor: createProcessor(group, script, workspace),
+  arguments: initArgumanets(script.args ?? []),
 })
