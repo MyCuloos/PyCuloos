@@ -24,10 +24,10 @@ export class TerminalScriptProcessor extends ScriptProcessorBase {
     onError: (error: ScriptError) => void
   ): void {
     if (this.process) {
-      this.stop()
+      this.process.kill()
     }
 
-    shell.cd(__dirname)
+    shell.cd(`${__dirname}/..`)
     shell.cd(this.scriptPath)
     const process = shell.exec(scriptCommand(this.scriptName, args), {
       async: true,
@@ -50,6 +50,7 @@ export class TerminalScriptProcessor extends ScriptProcessorBase {
   }
 
   stop(): void {
+    console.log("Kill")
     this.process?.kill()
     this.process = undefined
   }

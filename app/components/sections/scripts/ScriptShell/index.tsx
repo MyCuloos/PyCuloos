@@ -31,10 +31,14 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
     processor.stop()
   }
 
-  const clear = () => {
-    stopScript()
+  const clearOutput = () => {
     setScriptOutput([])
     setBuffer([])
+  }
+
+  const clear = () => {
+    stopScript()
+    clearOutput()
   }
 
   const onUpdate = (data: any) => {
@@ -51,7 +55,7 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
   }
 
   const runScript = () => {
-    clear()
+    clearOutput()
     setShellStatus("Running")
 
     processor.start(scriptArgs, data => onUpdate(data), onCompleted, onError)
