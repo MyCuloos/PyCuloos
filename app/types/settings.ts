@@ -26,6 +26,11 @@ export interface ScriptDefinition {
   args: ArgDefinition[] | undefined
 }
 
+export interface ScriptDefinitionDetails {
+  group: ScriptGroup
+  definition: ScriptDefinition
+}
+
 export interface ScriptGroupOptions {
   basePath: string
 }

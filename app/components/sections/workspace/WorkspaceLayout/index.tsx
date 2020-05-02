@@ -1,29 +1,29 @@
 import React from "react"
 import { Layout } from "antd"
 import WorkspaceSidebar from "../WorkspaceSidebar"
-import { WorkspaceBreadcrumb } from "../WorkspaceBreadcrumb"
 import {
   WorkspaceDefinition,
   ScriptDefinition,
   ScriptGroup,
 } from "../../../../types/settings"
 import { ScriptRoot } from "../../scripts/ScriptRoot"
-import { initScript } from "../../../../services/scripts/scriptInitializer"
-import { SelectedScriptItem } from "../../../../types/ui"
-import { ScriptArgument } from "../../../../types/scripts"
+import ScriptContext from "../../../../context/script/scriptContext"
 
 interface Params {
   definition: WorkspaceDefinition
 }
 
 export default function WorkspaceLayout({ definition }: Params) {
-  const [script, setScript] = React.useState<SelectedScriptItem | undefined>()
+  const script = React.useContext(ScriptContext)
 
   const setCurrentScript = (
     group: ScriptGroup,
     scriptDefinition: ScriptDefinition
   ) => {
-    setScript(initScript(group, scriptDefinition, definition))
+    script.selectScript({
+      group,
+      definition: scriptDefinition,
+    })
   }
 
   React.useEffect(() => {
@@ -32,13 +32,6 @@ export default function WorkspaceLayout({ definition }: Params) {
       definition.scriptGroups[0].scripts[0]
     )
   }, [])
-
-  const handleArgsUpdate = (values: ScriptArgument[]) => {
-    setScript({
-      ...(script as SelectedScriptItem),
-      arguments: values,
-    })
-  }
 
   return (
     <Layout style={{ height: "100%" }}>
@@ -49,7 +42,6 @@ export default function WorkspaceLayout({ definition }: Params) {
         />
       </Layout.Sider>
       <Layout style={{ padding: "0 24px 24px" }}>
-        {/* {script ? <WorkspaceBreadcrumb script={script} /> : undefined} */}
         <Layout.Content
           style={{
             padding: 24,
@@ -60,11 +52,7 @@ export default function WorkspaceLayout({ definition }: Params) {
             flexDirection: "column",
           }}
         >
-          {script ? (
-            <ScriptRoot script={script} onArgsChange={handleArgsUpdate} />
-          ) : (
-            undefined
-          )}
+          {script.definition ? <ScriptRoot /> : undefined}
         </Layout.Content>
       </Layout>
     </Layout>

@@ -26,8 +26,17 @@ export interface ArgDefinition {
 }
 
 export interface ScriptArgument {
+  index: number
   definition: ArgDefinition
   value: ArgValue
+}
+
+export type OutputLevel = "info" | "error"
+
+export interface ScriptOutputLine {
+  timestamp: Date
+  level: OutputLevel
+  message: string
 }
 
 export interface ScriptError {

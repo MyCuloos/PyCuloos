@@ -8,7 +8,7 @@ import { PythonScriptProcessor } from "../../processors/pythonScriptProcessor"
 import { initArgumanets } from "../../converters/argsConverter"
 import { TerminalScriptProcessor } from "../../processors/terminalScriptProcessor"
 
-const createProcessor = (
+export const createProcessor = (
   group: ScriptGroup,
   definition: ScriptDefinition,
   workspace: WorkspaceDefinition

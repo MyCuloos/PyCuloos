@@ -1,24 +1,13 @@
 import React from "react"
-import { Row, Col, Button, Space } from "antd"
+import { Row, Col, Button } from "antd"
 import { CodepenOutlined, SaveOutlined } from "@ant-design/icons"
 import MonacoEditor from "react-monaco-editor"
-import {
-  ScriptProcessor,
-  ScriptArgument,
-  ScriptError,
-} from "../../../../types/scripts"
+import { ScriptError } from "../../../../types/scripts"
 import ScriptOutout from "../ScriptOutout"
+import ScriptContext from "../../../../context/script/scriptContext"
 
-interface Params {
-  processor: ScriptProcessor
-  scriptArgs: ScriptArgument[]
-}
-
-const rootStyle = {
-  flex: 1,
-}
-
-export default function ScriptShell({ processor, scriptArgs }: Params) {
+export default function ScriptShell() {
+  const script = React.useContext(ScriptContext)
   const [scriptContent, setScriptContent] = React.useState<string>()
   const [showSource, setShowSource] = React.useState(false)
   const [shellStatus, setShellStatus] = React.useState<"Running" | "Idle">(
@@ -28,11 +17,11 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
   const [buffer, setBuffer] = React.useState<string[]>([])
 
   React.useEffect(() => {
-    processor.readScript(script => setScriptContent(script))
+    script.processor?.readScript(contetn => setScriptContent(contetn))
   }, [])
 
   const stopScript = () => {
-    processor.stop()
+    script.processor?.stop()
   }
 
   const clearOutput = () => {
@@ -62,11 +51,16 @@ export default function ScriptShell({ processor, scriptArgs }: Params) {
     clearOutput()
     setShellStatus("Running")
 
-    processor.start(scriptArgs, data => onUpdate(data), onCompleted, onError)
+    script.processor?.start(
+      script.args,
+      data => onUpdate(data),
+      onCompleted,
+      onError
+    )
   }
 
   const saveScript = (content: string) => {
-    processor.updateScript(content)
+    script.processor?.updateScript(content)
   }
 
   return (

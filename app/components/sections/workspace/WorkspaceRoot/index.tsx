@@ -1,6 +1,7 @@
 import React from "react"
 import WorkspaceLayout from "../WorkspaceLayout"
 import { WorkspaceDefinition } from "../../../../types/settings"
+import { ScriptProvider } from "../../../../context/script/scriptContext"
 
 interface Params {
   definition: WorkspaceDefinition
@@ -8,6 +9,14 @@ interface Params {
 
 export default function WorkspaceRoot({ definition }: Params) {
   return (
-    <>{definition ? <WorkspaceLayout definition={definition} /> : undefined}</>
+    <>
+      {definition ? (
+        <ScriptProvider workspace={definition}>
+          <WorkspaceLayout definition={definition} />
+        </ScriptProvider>
+      ) : (
+        undefined
+      )}
+    </>
   )
 }
