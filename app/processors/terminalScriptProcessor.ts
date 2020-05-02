@@ -27,7 +27,6 @@ export class TerminalScriptProcessor extends ScriptProcessorBase {
       this.process.kill()
     }
 
-    shell.cd(`${__dirname}/..`)
     shell.cd(this.scriptPath)
     const process = shell.exec(scriptCommand(this.scriptName, args), {
       async: true,

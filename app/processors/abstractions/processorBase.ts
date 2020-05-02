@@ -1,3 +1,4 @@
+import shell from "shelljs"
 import {
   ScriptProcessor,
   ScriptArgument,
@@ -9,7 +10,9 @@ import {
 } from "../../services/files/filesService"
 
 export abstract class ScriptProcessorBase implements ScriptProcessor {
-  constructor(protected scriptPath: string, protected scriptName: string) {}
+  constructor(protected scriptPath: string, protected scriptName: string) {
+    shell.cd(`${__dirname}/..`)
+  }
 
   protected filePath() {
     return `${this.scriptPath}/${this.scriptName}`

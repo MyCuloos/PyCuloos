@@ -2,7 +2,6 @@ import React from "react"
 import { Typography, Collapse } from "antd"
 import { RightOutlined } from "@ant-design/icons"
 import ScriptArgsInput from "../ScriptArgsInput"
-import { ScriptProcessor } from "../../../../types/scripts"
 import ScriptShell from "../ScriptShell"
 import ScriptContext from "../../../../context/script/scriptContext"
 

@@ -6,7 +6,6 @@ import { ScriptOutputLine, OutputLevel } from "../../../../types/scripts"
 
 interface Props {
   output: ScriptOutputLine[]
-  linePrefix: string
 }
 
 const root = css({
@@ -40,9 +39,9 @@ const getColor = (level: OutputLevel) => {
   }
 }
 
-const ScriptOutout = ({ output, linePrefix }: Props) => {
+const ScriptOutout = ({ output }: Props) => {
   const formatLine = (line: ScriptOutputLine) =>
-    `${linePrefix}${format(line.timestamp, "HH:mm:ss.SSS")} | ${line.level} | ${
+    `# ${format(line.timestamp, "HH:mm:ss.SSS")} | ${line.level} | ${
       line.message
     }`
 
@@ -57,10 +56,6 @@ const ScriptOutout = ({ output, linePrefix }: Props) => {
       </ScrollToBottom>
     </div>
   )
-}
-
-ScriptOutout.defaultProps = {
-  linePrefix: "# ",
 }
 
 export default ScriptOutout
