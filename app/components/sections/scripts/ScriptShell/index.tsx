@@ -2,7 +2,7 @@ import React from "react"
 import { Row, Col, Button } from "antd"
 import { CodepenOutlined, SaveOutlined } from "@ant-design/icons"
 import MonacoEditor from "react-monaco-editor"
-import { ScriptError } from "../../../../types/scripts"
+import { ScriptError, ScriptOutputLine } from "../../../../types/scripts"
 import ScriptOutout from "../ScriptOutout"
 import ScriptContext from "../../../../context/script/scriptContext"
 
@@ -13,8 +13,7 @@ export default function ScriptShell() {
   const [shellStatus, setShellStatus] = React.useState<"Running" | "Idle">(
     "Idle"
   )
-  const [scriptOutput, setScriptOutput] = React.useState<string[]>([])
-  const [buffer, setBuffer] = React.useState<string[]>([])
+  const [buffer, setBuffer] = React.useState<ScriptOutputLine[]>([])
 
   React.useEffect(() => {
     script.processor?.readScript(contetn => setScriptContent(contetn))
@@ -25,7 +24,7 @@ export default function ScriptShell() {
   }
 
   const clearOutput = () => {
-    setScriptOutput([])
+    script.clearOutput()
     setBuffer([])
   }
 
@@ -35,8 +34,12 @@ export default function ScriptShell() {
   }
 
   const onUpdate = (data: any) => {
-    buffer.push(data)
-    setScriptOutput([...buffer])
+    buffer.push({
+      level: "info",
+      message: data,
+      timestamp: new Date(),
+    })
+    script.setOutput([...buffer])
   }
 
   const onCompleted = () => {
@@ -44,7 +47,18 @@ export default function ScriptShell() {
   }
 
   const onError = (error: ScriptError) => {
-    setScriptOutput([`${error.message} ${error.stackTrace}`])
+    script.appendOutput({
+      level: "error",
+      message: error.message,
+      timestamp: new Date(),
+    })
+    if (error.stackTrace) {
+      script.appendOutput({
+        level: "error",
+        message: error.stackTrace,
+        timestamp: new Date(),
+      })
+    }
   }
 
   const runScript = () => {
@@ -130,7 +144,7 @@ export default function ScriptShell() {
       )}
 
       <div className="fx-1 fx-col">
-        <ScriptOutout output={scriptOutput} />
+        <ScriptOutout output={script.output} />
       </div>
     </div>
   )

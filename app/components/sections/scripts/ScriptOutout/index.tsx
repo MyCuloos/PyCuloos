@@ -1,16 +1,17 @@
 import React from "react"
 import ScrollToBottom from "react-scroll-to-bottom"
 import { css } from "glamor"
+import { format } from "date-fns"
+import { ScriptOutputLine, OutputLevel } from "../../../../types/scripts"
 
 interface Props {
-  output: string[]
+  output: ScriptOutputLine[]
   linePrefix: string
 }
 
 const root = css({
   flex: 1,
   paddingTop: "1rem",
-  color: "green",
   backgroundColor: "black",
   position: "relative",
 })
@@ -30,14 +31,27 @@ const lineStyles = {
   marginLeft: 5,
 }
 
+const getColor = (level: OutputLevel) => {
+  switch (level) {
+    case "error":
+      return "red"
+    default:
+      return "white"
+  }
+}
+
 const ScriptOutout = ({ output, linePrefix }: Props) => {
+  const formatLine = (line: ScriptOutputLine) =>
+    `${linePrefix}${format(line.timestamp, "HH:mm:ss.SSS")} | ${line.level} | ${
+      line.message
+    }`
+
   return (
     <div {...root}>
       <ScrollToBottom className={container}>
         {output.map((x, index) => (
           <p key={index} style={lineStyles}>
-            {linePrefix}
-            {x}
+            <span style={{ color: getColor(x.level) }}>{formatLine(x)}</span>
           </p>
         ))}
       </ScrollToBottom>
@@ -46,7 +60,7 @@ const ScriptOutout = ({ output, linePrefix }: Props) => {
 }
 
 ScriptOutout.defaultProps = {
-  linePrefix: " # ",
+  linePrefix: "# ",
 }
 
 export default ScriptOutout

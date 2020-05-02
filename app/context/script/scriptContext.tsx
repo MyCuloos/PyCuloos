@@ -20,6 +20,7 @@ interface ScriptContextData {
   deselectScript(): void
   updateArgument(argument: ScriptArgument): void
   appendOutput(line: ScriptOutputLine): void
+  setOutput(lines: ScriptOutputLine[]): void
   clearOutput(): void
 }
 
@@ -32,6 +33,7 @@ const ScriptContext = React.createContext<ScriptContextData>({
   deselectScript: () => {},
   updateArgument: () => {},
   appendOutput: () => {},
+  setOutput: () => {},
   clearOutput: () => {},
 })
 
@@ -51,20 +53,20 @@ export const ScriptProvider = ({
     ScriptProcessor | undefined
   >()
   const [args, setArgs] = React.useState<ScriptArgument[]>([])
-  const [output, setOutput] = React.useState<ScriptOutputLine[]>([])
+  const [output, setOutputLines] = React.useState<ScriptOutputLine[]>([])
 
   const deselectScript = () => {
     setDefinition(undefined)
     setProcessor(undefined)
     setArgs([])
-    setOutput([])
+    setOutputLines([])
   }
 
   const selectScript = (value: ScriptDefinitionDetails) => {
     setDefinition(value)
     setProcessor(createProcessor(value.group, value.definition, workspace))
     setArgs(initArgumanets(value.definition.args ?? []))
-    setOutput([])
+    setOutputLines([])
   }
 
   const updateArgument = (argument: ScriptArgument) => {
@@ -74,7 +76,11 @@ export const ScriptProvider = ({
   }
 
   const appendOutput = (line: ScriptOutputLine) => {
-    setOutput([...output, line])
+    setOutputLines([...output, line])
+  }
+
+  const setOutput = (lines: ScriptOutputLine[]) => {
+    setOutputLines(lines)
   }
 
   const clearOutput = () => {
@@ -92,6 +98,7 @@ export const ScriptProvider = ({
         deselectScript,
         updateArgument,
         appendOutput,
+        setOutput,
         clearOutput,
       }}
     >
